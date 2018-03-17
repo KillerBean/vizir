@@ -1,16 +1,21 @@
 var express = require('express');
 var router = express.Router();
-var model = require('./../model/plans')();
-//var prices = require('./../model/standard_prices')();
+var modelPlans = require('./../model/Plan')();
+var modelPrices = require('./../model/Price')();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    /*{
-  "origin": [11,16,11,17,11,18],
-  "destiny": [16,11,17,11,18,11],
-  "price":[1.9,2.9,1.7,2.7,0.9,1.9]
-}*/
-    res.render('index', { title: 'Express' });
+    modelPlans.find(null, function(err, plans){
+        if (err){
+            throw err;
+        }
+        modelPrices.find(null, function(error, prices){
+            if (error){
+                throw error;
+            }
+            res.render('index', { title: 'Telzir', Plans: plans, Prices: prices });
+        });
+    });
 });
 
 module.exports = router;
