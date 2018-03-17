@@ -1,8 +1,20 @@
-body {
+/*body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
-
+*/
 a {
   color: #00B7FF;
+}
+.alert{
+    display: none;
+}
+/*.error {
+  color: #e74c3c;
+}*/
+nav{
+    background-color: #e3f2fd;
+}
+h3{
+    text-align: center;
 }
