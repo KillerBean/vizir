@@ -1,7 +1,7 @@
 db = connect("localhost:27017/app_db")
-plan1 = {name: "FaleMais 30", limit: 30}
-plan2 = {name: "FaleMais 60", limit: 60}
-plan3 = {name: "FaleMais 120", limit: 120}
+plan1 = {name: "Fale Mais 30", limit: 30}
+plan2 = {name: "Fale Mais 60", limit: 60}
+plan3 = {name: "Fale Mais 120", limit: 120}
 db.plans.insert(plan1)
 db.plans.insert(plan2)
 db.plans.insert(plan3)

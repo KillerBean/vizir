@@ -20,13 +20,23 @@ router.get('/', function(req, res, next) {
 
 router.post('/prices', function(req, res, next) {
     var obj = req.body;
-    console.log(obj.destino);
     modelPrices.find({origin: obj.origem, destiny: obj.destino},function(err, doc){
         if(err){
             throw err;
         }
-        newValue = doc[0].price*1.10;
-        let prices = {origin: doc[0].origin, destiny: doc[0].destiny, stdValue: doc[0].price, newValue: Math.round(newValue * 100)/100};
+        let prices;
+        if(doc == ''){
+            prices = {origin: null, destiny: null, stdValue: null, newValue: null};
+        }else{
+            let newValue, stdValue;
+            if(obj.plano >= obj.tempo){
+                newValue = 0;
+            }else{
+                newValue = parseFloat(((obj.tempo-obj.plano)*(doc[0].price*1.1)).toFixed(2));
+            }
+            stdValue = parseFloat((obj.tempo * doc[0].price).toFixed(2));
+            prices = {origin: doc[0].origin, destiny: doc[0].destiny, stdValue: stdValue, newValue: newValue};
+        }
         res.send(prices);
     });
 });

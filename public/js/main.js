@@ -42,18 +42,17 @@ $('form').validate({
 		var chamadaOrigem = parseInt($("#chamadaOrigem").val());
 		var chamadaDestino = parseInt($("#chamadaDestino").val());
 		var tempoChamada = parseInt($("#tempoChamada").val());
-		var selectPlano = parseInt($("#selectPlano").val());
-		var data = {origem: chamadaOrigem, destino: chamadaDestino, tempo: tempoChamada, plano: selectPlano};
+		var selectPlano = $("#selectPlano");
+		var data = {origem: chamadaOrigem, destino: chamadaDestino, tempo: tempoChamada, plano: parseInt(selectPlano.val())};
 		$.ajax({
 			type: 'POST',
 			contentType: 'application/json',
             url: 'http://localhost:3000/prices',
 			data: JSON.stringify(data),
             success: function(data) {
-				$('#tdOrigem').text(data.origin);
-				$('#tdDestino').text(data.destiny);
-				$('#tdStdValue').text(data.stdValue);
-				$('#tdNewValue').text(data.newValue);
+				$('#tdPlano').text(selectPlano.find(":selected").text());
+				$('#tdStdValue').text("R$ "+data.stdValue.toFixed(2) || "-");
+				$('#tdNewValue').text("R$ "+data.newValue.toFixed(2) || "-");
             }
         });
     }
