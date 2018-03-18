@@ -1,3 +1,4 @@
+'use strict';
 var express = require('express');
 var router = express.Router();
 var modelPlans = require('./../model/Plan')();
@@ -32,10 +33,10 @@ router.post('/prices', function(req, res, next) {
             if(obj.plano >= obj.tempo){
                 newValue = 0;
             }else{
-                newValue = parseFloat(((obj.tempo-obj.plano)*(doc[0].price*1.1)).toFixed(2));
+                newValue = ((obj.tempo-obj.plano)*(doc[0].price*1.1));
             }
-            stdValue = parseFloat((obj.tempo * doc[0].price).toFixed(2));
-            prices = {origin: doc[0].origin, destiny: doc[0].destiny, stdValue: stdValue, newValue: newValue};
+            stdValue = (obj.tempo * doc[0].price);
+            prices = {origin: doc[0].origin, destiny: doc[0].destiny, stdValue: parseFloat(stdValue.toFixed(2)), newValue: parseFloat(newValue.toFixed(2))};
         }
         res.send(prices);
     });

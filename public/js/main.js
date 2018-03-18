@@ -1,22 +1,23 @@
-'use strict'
-var selectValue;
 var nua = navigator.userAgent;
-var is_android = ((nua.indexOf('Mozilla/5.0') > -1 && nua.indexOf('Android ') > -1 && nua.indexOf('AppleWebKit') > -1) && !(nua.indexOf('Chrome') > -1));
+var selectValue;
+var selectPlano = $("#selectPlano");
+
+var is_android = ((nua.indexOf("Mozilla/5.0") > -1 && nua.indexOf("Android ") > -1 && nua.indexOf("AppleWebKit") > -1) && !(nua.indexOf("Chrome") > -1));
 if(is_android) {
-		$('select.form-control').removeClass('form-control').css('width', '100%');
+		selectPlano.removeClass("form-control").css("width", "100%");
 }
 
-$('#selectPlano').on('change', function(){
+selectPlano.on("change", function(){
     selectValue = parseInt($(this).val());
 });
-/*$('input[type=submit].form-control').on('click', function(e){
-    e.preventDefault();
-    if(typeof(selectValue) == "number"){
 
-    }
-});*/
-
-$('form').validate({
+var tdPlano = $("#tdPlano");
+var tdStdValue = $("#tdStdValue");
+var tdNewValue = $("#tdNewValue");
+var chamadaOrigem = $("#chamadaOrigem").val();
+var chamadaDestino = $("#chamadaDestino").val();
+var tempoChamada = $("#tempoChamada").val();
+$("form").validate({
 	rules:{
 		origem:{
 			required: true
@@ -37,22 +38,18 @@ $('form').validate({
 	 tempo: "Digite os minutos",
 	 selectPlano: "Escola um plano"
  	},
-	submitHandler: function(form)
+	submitHandler: function()
 	{
-		var chamadaOrigem = parseInt($("#chamadaOrigem").val());
-		var chamadaDestino = parseInt($("#chamadaDestino").val());
-		var tempoChamada = parseInt($("#tempoChamada").val());
-		var selectPlano = $("#selectPlano");
-		var data = {origem: chamadaOrigem, destino: chamadaDestino, tempo: tempoChamada, plano: parseInt(selectPlano.val())};
+		var data = {origem: parseInt(chamadaOrigem), destino: parseInt(chamadaDestino), tempo: parseInt(tempoChamada), plano: parseInt(selectValue)};
 		$.ajax({
-			type: 'POST',
-			contentType: 'application/json',
-            url: 'http://localhost:3000/prices',
+			type: "POST",
+			contentType: "application/json",
+            url: "http://localhost:3000/prices",
 			data: JSON.stringify(data),
             success: function(data) {
-				$('#tdPlano').text(selectPlano.find(":selected").text());
-				$('#tdStdValue').text("R$ "+data.stdValue.toFixed(2) || "-");
-				$('#tdNewValue').text("R$ "+data.newValue.toFixed(2) || "-");
+				tdPlano.text(selectPlano.find(":selected").text());
+				tdStdValue.text("R$ "+data.stdValue.toFixed(2) || "-");
+				tdNewValue.text("R$ "+data.newValue.toFixed(2) || "-");
             }
         });
     }

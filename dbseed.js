@@ -1,4 +1,3 @@
-let db = require("./libs/connect_db");
 const modelPlan = require("./model/Plan")();
 const modelPrice = require("./model/Price")();
 
@@ -16,18 +15,17 @@ let planLimits = plansDump[1][1];
 let planOrigins = pricesDump[0][1];
 let planDestinies = pricesDump[1][1];
 let planPrices = pricesDump[2][1];
-var created;
 
 console.log("Inserindo informações...");
 if(planNames.lenght == planLimits.lenght){
-    for (var i = 0; i < planNames.length; i++) {
+    for (let i = 0; i < planNames.length; i++) {
         modelPlan.findOrCreate({ name: planNames[i], limit: planLimits[i] });
     }
 }else{
     console.error("Arrays Incorretas");
 }
 if(planOrigins.lenght == planDestinies.lenght && planDestinies.lenght == planPrices.lenght){
-    for (var i = 0; i < planOrigins.length; i++) {
+    for (let i = 0; i < planOrigins.length; i++) {
         modelPrice.findOrCreate({ origin: planOrigins[i], destiny: planDestinies[i], price: planPrices[i] });
     }
 }else{
