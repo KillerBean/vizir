@@ -25,5 +25,14 @@
     "chai-html": "^1.1.5",
     "mocha": "^5.0.4",
     "superagent": "^3.8.2"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://KillerBean01@bitbucket.org/KillerBean01/vizir-project.git"
+  },
+  "keywords": [
+    "vizir",
+    "telzir",
+    "falemais"
+  ]
 }
