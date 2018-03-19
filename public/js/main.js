@@ -8,15 +8,17 @@ if(is_android) {
 }
 
 selectPlano.on("change", function(){
-    selectValue = parseInt($(this).val());
+    selectValue = parseInt($(this).val(), 10);
 });
 
 var tdPlano = $("#tdPlano");
 var tdStdValue = $("#tdStdValue");
 var tdNewValue = $("#tdNewValue");
-var chamadaOrigem = $("#chamadaOrigem").val();
-var chamadaDestino = $("#chamadaDestino").val();
-var tempoChamada = $("#tempoChamada").val();
+var chamadaOrigem = $("#chamadaOrigem");
+var chamadaDestino = $("#chamadaDestino");
+var tempoChamada = $("#tempoChamada");
+var urlAction = document.URL+'prices';
+var data;
 $("form").validate({
 	rules:{
 		origem:{
@@ -28,7 +30,7 @@ $("form").validate({
 		tempo:{
 			required: true
 		},
-		selectPlano:{
+		plano:{
 			required: true
 		}
 	},
@@ -36,21 +38,25 @@ $("form").validate({
 	 origem: "Digite o DDD de origem",
 	 destino: "Digite o DDD de destino",
 	 tempo: "Digite os minutos",
-	 selectPlano: "Escola um plano"
+	 plano: "Escola um plano"
  	},
-	submitHandler: function()
+	submitHandler: function(form)
 	{
-		var data = {origem: parseInt(chamadaOrigem), destino: parseInt(chamadaDestino), tempo: parseInt(tempoChamada), plano: parseInt(selectValue)};
+		data = {origem: parseInt(chamadaOrigem.val(), 10), destino: parseInt(chamadaDestino.val(), 10), tempo: parseInt(tempoChamada.val(), 10), plano: parseInt(selectValue, 10)};
 		$.ajax({
 			type: "POST",
 			contentType: "application/json",
-            url: "http://localhost:3000/prices",
+            url: urlAction,
 			data: JSON.stringify(data),
             success: function(data) {
 				tdPlano.text(selectPlano.find(":selected").text());
-				tdStdValue.text("R$ "+data.stdValue.toFixed(2) || "-");
-				tdNewValue.text("R$ "+data.newValue.toFixed(2) || "-");
-            }
+				tdStdValue.text(data.stdValue ? "R$ " + data.stdValue.toFixed(2) : "Valor incorreto!");
+				tdNewValue.text(data.stdValue ? "R$ " + data.newValue.toFixed(2) : "Valor incorreto!");
+            },
+			error: function(data){
+				tdStdValue.text("Valor incorreto!");
+				tdNewValue.text("Valor incorreto!");
+			}
         });
     }
 });

@@ -12,11 +12,18 @@
         </nav>
         <div class="container">
             <!-- <h1><%= title %></h1> -->
+            <div class="row">
+                <div class="col-md"><br></div>
+            </div>
             <div class="row justify-content-center">
-                <div class="col-md-6 col-sm">
+                <div class="col-md-6 col-sm-6">
                     <h3>Com o FaleMais você pode mais!</h3>
                 </div>
-                <div class="col-md"></div>
+                <div class="col-md-6 col-sm-6" >
+                    <div class="alert alert-info" role="alert">
+                        DDD's aceitos: 11, 16,  17, 18
+                    </div>
+                </div>
             </div>
             <div class="row justify-content-center">
                 <div class="col-md-6 col-sm">
@@ -25,7 +32,7 @@
                             <input type="text" id="chamadaOrigem" name="origem" class="form-control" placeholder="Digite o DDD de origem.">
                             <input type="text" id="chamadaDestino" name="destino" class="form-control" placeholder="Digite o DDD de destino.">
                             <input type="text" id="tempoChamada" name="tempo" class="form-control" placeholder="Digite o tempo de chamada.">
-                            <select id="selectPlano" class="custom-select form-control" placeholder="Escolha o sey plano." required>
+                            <select id="selectPlano" name="select" class="custom-select form-control" placeholder="Escolha o seu plano." required>
                                 <option value="" selected>Escolha o plano</option>
                                 <% Plans.forEach(function(key) { %>
                                     <option value="<%= key.limit %>"><%= key.name %></option>

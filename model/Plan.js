@@ -1,6 +1,6 @@
 module.exports = function() {
     const mongoose = require('mongoose');
-    const db = require('./../libs/connect_db')();
+    require('./../libs/connect_db')();
     const findOrCreate = require("findorcreate-promise");
 
     let planSchema = new mongoose.Schema({

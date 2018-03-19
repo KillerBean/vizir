@@ -6,8 +6,19 @@
 a {
   color: #00B7FF;
 }
-.alert{
+/* .alert{
     display: none;
+} */
+h1{
+     word-wrap: break-word;
+     -webkit-hyphens: auto;
+     -moz-hyphens: auto;
+     -ms-hyphens: auto;
+     -o-hyphens: auto;
+     hyphens: auto;
+}
+.error{
+    margin: 0;
 }
 nav{
     background-color: #e3f2fd;
