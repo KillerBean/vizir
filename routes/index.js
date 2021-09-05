@@ -1,15 +1,16 @@
 'use strict';
 var express = require('express');
 var router = express.Router();
+require('./../libs/connect_db')().catch(err => console.log(err));
 var modelPlans = require('./../model/Plan')();
 var modelPrices = require('./../model/Price')();
 
-router.get('/', function(req, res, next) {
-    modelPlans.find(null, function(err, plans){
+router.get('/', async function(req, res, next) {
+    (await modelPlans).find(null, async function(err, plans){
         if (err){
             throw err;
         }
-        modelPrices.find(null, function(error, prices){
+        (await modelPrices).find(null, function(error, prices){
             if (error){
                 throw error;
             }
@@ -18,7 +19,7 @@ router.get('/', function(req, res, next) {
     });
 });
 
-router.post('/prices', function(req, res, next) {
+router.post('/prices', async function(req, res, next) {
     var obj = req.body;
     if (!isValidObject(obj)) {
         res.status(400);
@@ -26,7 +27,7 @@ router.post('/prices', function(req, res, next) {
     }else{
         res.status(200);
         let prices = {origin: null, destiny: null, stdValue: null, newValue: null};
-        modelPrices.find({origin: obj.origem, destiny: obj.destino},function(err, doc){
+        (await modelPrices).find({origin: obj.origem, destiny: obj.destino},function(err, doc){
             if(err){
                 throw err;
             }

@@ -14,16 +14,19 @@
     "debug": "~2.6.9",
     "dotenv": "^5.0.1",
     "ejs": "~2.5.7",
-    "express": "~4.15.5",
+    "express": "^4.17.1",
     "findorcreate-promise": "^1.2.0",
-    "mongoose": "^5.0.10",
-    "morgan": "~1.9.0",
+    "mongodb": "^4.1.1",
+    "mongoose": "^6.0.2",
+    "mongoose-findorcreate": "^3.0.0",
+    "morgan": "^1.9.1",
     "serve-favicon": "~2.4.5"
   },
   "devDependencies": {
+    "@types/dotenv": "^8.2.0",
     "chai": "^4.1.2",
     "chai-html": "^1.1.5",
-    "mocha": "^5.0.4",
+    "mocha": "^9.1.0",
     "superagent": "^3.8.2"
   },
   "repository": {
