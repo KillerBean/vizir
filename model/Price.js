@@ -1,7 +1,8 @@
-module.exports = function() {
+module.exports = async function() {
     const mongoose = require('mongoose');
-    require('./../libs/connect_db')();
+    // const db = require('./../libs/connect_db')();
     const findOrCreate = require("findorcreate-promise");
+    // const findOrCreate = require('mongoose-findorcreate');
 
     let standardSchema = new mongoose.Schema({
         origin: {
@@ -22,6 +23,7 @@ module.exports = function() {
     });
 
     standardSchema.plugin(findOrCreate);
-    const StandardPrice = mongoose.model('prices', standardSchema);
+    const StandardPrice = mongoose.model('price', standardSchema);
+    await StandardPrice.createCollection();
     return StandardPrice;
 }

@@ -1,3 +1,4 @@
+const db = require('./libs/connect_db')().catch(err => console.log(err));
 const modelPlan = require("./model/Plan")();
 const modelPrice = require("./model/Price")();
 
@@ -17,18 +18,62 @@ let planDestinies = pricesDump[1][1];
 let planPrices = pricesDump[2][1];
 
 console.log("Inserindo informações...");
-if(planNames.lenght == planLimits.lenght){
-    for (let i = 0; i < planNames.length; i++) {
-        modelPlan.findOrCreate({ name: planNames[i], limit: planLimits[i] });
+
+async function insertData(){
+    let priceModel = (await modelPrice);
+    let planModel = (await modelPlan);
+    if(planNames.lenght == planLimits.lenght){
+        for (let i = 0; i < planNames.length; i++) {
+            try{
+                // let mplan = await planModel.findOne({ name: planNames[i], limit: planLimits[i] }).exec();
+                // if(!mplan){
+                //     mplan = new planModel({ name: planNames[i], limit: planLimits[i] });
+                //     await mplan.save(function (err) {
+                //         if (err) return console.log(err);
+                //     });
+                // }
+                await planModel.findOrCreate({ name: planNames[i], limit: planLimits[i] })
+                    .then((doc) => {
+                        /**
+                         * doc.created = true
+                         * doc.result = new document
+                         **/
+                    })
+                    .catch((done) => console.log(done));
+                console.log("-->" + " { Plano: " + planNames[i] + ", Limite: " + planLimits[i] + " }");
+            }catch(err){
+                console.error("Error: ", err);
+            }
+        }
+    }else{
+        console.error("Arrays Incorretas");
     }
-}else{
-    console.error("Arrays Incorretas");
-}
-if(planOrigins.lenght == planDestinies.lenght && planDestinies.lenght == planPrices.lenght){
-    for (let i = 0; i < planOrigins.length; i++) {
-        modelPrice.findOrCreate({ origin: planOrigins[i], destiny: planDestinies[i], price: planPrices[i] });
+    if(planOrigins.lenght == planDestinies.lenght && planDestinies.lenght == planPrices.lenght){
+        for (let i = 0; i < planOrigins.length; i++) {
+            try{
+                // let mprice = await priceModel.findOne({ origin: planOrigins[i], destiny: planDestinies[i], price: planPrices[i] }).exec();
+                // if(!mprice){
+                //     mprice = new priceModel({ origin: planOrigins[i], destiny: planDestinies[i], price: planPrices[i] });
+                //     await mprice.save(function (err) {
+                //         if (err) return console.log(err);
+                //     });
+                // }
+                await priceModel.findOrCreate({ origin: planOrigins[i], destiny: planDestinies[i], price: planPrices[i] })
+                    .then((doc) => {
+                        /**
+                         * doc.created = true
+                         * doc.result = new document
+                         **/
+                    })
+                    .catch((done) => console.log(done));
+                console.log("-->" + " { Origem: " + planOrigins[i] + ", Destino: " + planDestinies[i] + ", Preço: " + planPrices[i] + " }");
+            }catch(err){
+                console.error("Error: ", err);
+            }
+        }
+    }else{
+        console.error("Arrays Incorretas");
     }
-}else{
-    console.error("Arrays Incorretas");
+    process.exit(0);
 }
-process.exit(0);
+insertData();

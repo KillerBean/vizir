@@ -1,7 +1,8 @@
-module.exports = function() {
+module.exports = async function() {
     const mongoose = require('mongoose');
-    require('./../libs/connect_db')();
+    // const db = require('./../libs/connect_db')();
     const findOrCreate = require("findorcreate-promise");
+    // const findOrCreate = require('mongoose-findorcreate');
 
     let planSchema = new mongoose.Schema({
         name: {
@@ -17,6 +18,7 @@ module.exports = function() {
     });
 
     planSchema.plugin(findOrCreate);
-    const Plan = mongoose.model('plans', planSchema);
+    const Plan = mongoose.model('plan', planSchema);
+    await Plan.createCollection();
     return Plan;
 }
