@@ -1,3 +1,5 @@
+Este projeto foi parte de um processo seletivo.
+
 Para rodar o servidor depois de clonar o projeto do bitbucket você deve seguir estes passos:
 Ter o mongodb instalado.
 https://www.mongodb.com/
