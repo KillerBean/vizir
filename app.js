@@ -9,6 +9,13 @@ var index = require('./routes/index');
 
 var app = express();
 
+// set up rate limiter: maximum of five requests per minute
+var RateLimit = require('express-rate-limit');
+var limiter = new RateLimit({
+  windowMs: 1*60*1000, // 1 minute
+  max: 5
+});
+
 require('dotenv').config();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -22,6 +29,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(limiter);
 
 app.get('/', index);
 app.post('/prices', index);
