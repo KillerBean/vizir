@@ -25,13 +25,6 @@ async function insertData(){
     if(planNames.lenght == planLimits.lenght){
         for (let i = 0; i < planNames.length; i++) {
             try{
-                // let mplan = await planModel.findOne({ name: planNames[i], limit: planLimits[i] }).exec();
-                // if(!mplan){
-                //     mplan = new planModel({ name: planNames[i], limit: planLimits[i] });
-                //     await mplan.save(function (err) {
-                //         if (err) return console.log(err);
-                //     });
-                // }
                 await planModel.findOrCreate({ name: planNames[i], limit: planLimits[i] })
                     .then((doc) => {
                         /**
@@ -51,13 +44,6 @@ async function insertData(){
     if(planOrigins.lenght == planDestinies.lenght && planDestinies.lenght == planPrices.lenght){
         for (let i = 0; i < planOrigins.length; i++) {
             try{
-                // let mprice = await priceModel.findOne({ origin: planOrigins[i], destiny: planDestinies[i], price: planPrices[i] }).exec();
-                // if(!mprice){
-                //     mprice = new priceModel({ origin: planOrigins[i], destiny: planDestinies[i], price: planPrices[i] });
-                //     await mprice.save(function (err) {
-                //         if (err) return console.log(err);
-                //     });
-                // }
                 await priceModel.findOrCreate({ origin: planOrigins[i], destiny: planDestinies[i], price: planPrices[i] })
                     .then((doc) => {
                         /**
